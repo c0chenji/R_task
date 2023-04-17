@@ -4,6 +4,9 @@
 ![Picture Description](/imgs/MongoDB_compass.jpg)
 All the sample are created by inserting json file.
 
+### main command for starting program
+`node index.js`
+
 ## API Endpoints
 
 ### Get All Data
