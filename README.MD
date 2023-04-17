@@ -12,20 +12,22 @@ All the sample are created by inserting json file.
 ### Get All Data
 
 `http://localhost:3000/read_json`
-
 Read data from local json file
 
+sample output
+![Phone Output](/imgs/read_json.jpg)
 ### Get Data by Phone Number
 `GET /mongodb/phone/:phone`
+Retrieves data based on the phone number provided, add startDate and endDate to filter the output by time range.
 
 sample input
-`http://localhost:3000/mongodb/phone//SEP567567678678?startDate=1656788801&endDate=1656788810`
+`http://localhost:3000/mongodb/phone/SEP567567678678?startDate=1656788801&endDate=1656788810`
 - `startDate`: Optional. Specifies the start date for the time range.
 - `endDate`: Optional. Specifies the end date for the time range.
 
 sample output
 ![Phone Output](/imgs/get_phone_by_time.jpg)
-Retrieves data based on the phone number provided, add startDate and endDate to filter the output by time range.
+
 
 ### Get Data by Voicemail
 
