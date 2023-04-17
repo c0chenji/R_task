@@ -1,0 +1,90 @@
+Setup:
+no-sql DB (such as ElasticSearch or MongoDB) established connection: db
+'datalog' - a collection of documents in db looking like this:
+{
+    _id: 12345
+    "originationTime": 1656788800,
+    "clusterId": "domainserver1",
+    "userId": "555666777",
+    "devices": {
+        "phone": "SEP123123234234",
+        "voicemail": "555666777VM"
+    }
+}
+
+1) Write a query to retrieve all records matching exactly "SEP12345" in "phone" field
+Assume the index "datalog" is exisiting, and sample data is ingested. 
+Run the following command on dev tools terminal to get the result:
+GET /datalog/_search
+{
+  "query": {
+    "match": {
+      "devices.phone": "SEP12345"
+    }
+  }
+}
+
+
+2) Modify the previous query to retrieve all records where "phone" field value starts with "SEP12345"
+To specify the "phone" field starts with "SEP12345", you can use prefix under query
+
+On dev tools terminal,  run:
+GET /datalog/_search
+{
+  "query": {
+    "prefix": {
+      "devices.phone": "SEP12345"
+    }
+  }
+}
+
+Or you can use regexp instead of prefix
+
+GET /datalog/_search
+{
+  "query": {
+    "regexp": {
+      "devices.phone": "^SEP12345.*"
+    }
+  }
+}
+
+
+
+If you were to store these documents in RDBMS (assuming the only unique field in the doc collection is _id):
+1) How would you setup your table(s) to achieve optimum normalization?
+I will create two tables , one called datalog with _id as primary key, and another table called devices having datalog's id as foreign key.
+Sample sql:
+
+CREATE TABLE datalog (
+  id INT PRIMARY KEY,
+  origination_time INT,
+  cluster_id VARCHAR(255),
+  user_id VARCHAR(255)
+);
+
+CREATE TABLE devices (
+  id INT PRIMARY KEY,
+  phone VARCHAR(255),
+  voicemail VARCHAR(255),
+  datalog_id INT,
+  FOREIGN KEY (datalog_id) REFERENCES datalog(id)
+);
+
+
+
+2) Write a select statement to find all records where "phone" field value equals "SEP12345"
+
+SELECT *
+FROM datalog
+JOIN devices on datalog.id = devices.datalog_id
+WHERE device.phone = "SEP12345";
+
+
+
+3) Considering that "originationTime" represents Unix epoch, modify the select query to sort the result set by first time and then userId in ascending order 
+
+SELECT *
+FROM datalog
+JOIN devices on datalog.id = devices.datalog_id
+ORDER BY datalog.original_time ASC, datalog.user_id ASC;
