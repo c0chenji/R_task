@@ -10,7 +10,7 @@ NoteL: Data should be ready on MongoDB Compass before running the command below
 
 
 --------------------------------------------
-### Get All Data from read_json
+## Get All Data from read_json
 
 `http://localhost:3000/read_json`
 Read data from local json file
@@ -23,7 +23,7 @@ sample output
 ![Phone Output](/imgs/read_json.jpg)
 -------------------------------------
 ## MongoDB endpoint 
-#### Get Data by Phone Number
+### Get Data by Phone Number
 `GET /mongodb/phone/:phone`
 Retrieves data based on the phone number provided, add startDate and endDate to filter the output by time range.
 
@@ -36,7 +36,7 @@ sample output
 ![Phone Output](/imgs/get_phone_by_time.jpg)
 
 
-#### Get Data by Voicemail
+### Get Data by Voicemail
 
 `GET /mongodb/voicemail/:voicemail`
 
@@ -55,11 +55,11 @@ Retrieves data based on the user ID provided.
 Retrieves data based on the cluster ID provided.
 
 --------------------------------------------------------------------
-#### Frontend(React)- won't be able to finish
+## Frontend(React)- won't be able to finish
 
 Run `npm start` under "my-frontend"
 
-Output of sortable table
+### Output of sortable table
 ![Phone Output](/imgs/sortable_table.jpg)
 
 
