@@ -68,6 +68,7 @@ Run `npm start` under "my-frontend", default port will be switched to available 
 ## Export to CSV will generate excel file with following format.
 ![csv Output](/imgs/csv_output.jpg)
 
+features left: search box and pagination
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
