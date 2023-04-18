@@ -1,15 +1,14 @@
-import { Route } from 'react-router-dom';
-import DataLogPage from './pages/DataLogPage';
+// import logo from './logo.svg';
+import './App.css';
+import DataLogForm from './components/DataLogForm'
 
 function App() {
   return (
-    <div className="App">
-      <Route path="/" exact component={DataLogPage} />
+    <div>
+      <h1>DATALOG</h1>
+      <DataLogForm />
     </div>
   );
 }
 
-
-
-
-
+export default App;
