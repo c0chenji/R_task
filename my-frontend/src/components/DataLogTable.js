@@ -1,131 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import {  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Paper } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Table } from "react-bootstrap";
 
 function DataLogTable() {
   const [data, setData] = useState([]);
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("id");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const fetchData = async () => {
-    const response = await axios.get("http://localhost:3000/mongodb");
-    setData(response.data);
-  };
+  const [sortOrder, setSortOrder] = useState({column: null, direction: null});
 
   useEffect(() => {
-    fetchData();
+    axios
+      .get("http://localhost:3000/mongodb")
+      .then((response) => setData(response.data))
+      .catch((error) => console.log(error));
   }, []);
 
-  const handleSort = (property) => (event) => {
-    const isAscending = orderBy === property && order === "asc";
-    setOrder(isAscending ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const sortedData = data.sort((a, b) => {
-    const isAscending = order === "asc";
-    if (typeof a[orderBy] === "string") {
-      return isAscending
-        ? a[orderBy].localeCompare(b[orderBy])
-        : b[orderBy].localeCompare(a[orderBy]);
-    } else {
-      return isAscending
-        ? a[orderBy] > b[orderBy]
-          ? 1
-          : -1
-        : b[orderBy] > a[orderBy]
-        ? 1
-        : -1;
+  const sortData = (column) => {
+    let direction = "asc";
+    if (sortOrder.column === column && sortOrder.direction === "asc") {
+      direction = "desc";
     }
-  });
+    setSortOrder({ column: column, direction: direction });
+  };
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+  const sortedData = React.useMemo(() => {
+    if (sortOrder.column === null) {
+      return data;
+    }
+    return [...data].sort((a, b) => {
+      let columnA = a[sortOrder.column];
+      let columnB = b[sortOrder.column];
+      if (sortOrder.column === "devices.phone" || sortOrder.column === "devices.voicemail") {
+        columnA = a.devices[sortOrder.column.split(".")[1]];
+        columnB = b.devices[sortOrder.column.split(".")[1]];
+      }
+      if (sortOrder.direction === "asc") {
+        return columnA < columnB ? -1 : 1;
+      } else {
+        return columnA > columnB ? -1 : 1;
+      }
+    });
+  }, [data, sortOrder]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell key="time">
-              <TableSortLabel
-                active={orderBy === "time"}
-                direction={order}
-                onClick={handleSort("time")}
-              >
-                originationTime
-              </TableSortLabel>
-            </TableCell>
-            <TableCell key="clusterId">
-              <TableSortLabel
-                active={orderBy === "clusterId"}
-                direction={order}
-                onClick={handleSort("clusterId")}
-              >
-                ClusterId
-              </TableSortLabel>
-            </TableCell>
-            <TableCell key="userId">
-              <TableSortLabel
-                active={orderBy === "userId"}
-                direction={order}
-                onClick={handleSort("userId")}
-              >
-                UserId
-              </TableSortLabel>
-            </TableCell>
-            <TableCell key="Phone">
-              <TableSortLabel
-                active={orderBy === "Phone"}
-                direction={order}
-                onClick={handleSort("Phone")}
-              >
-                Phone
-              </TableSortLabel>
-            </TableCell>
-            <TableCell key="VM">
-              <TableSortLabel
-                active={orderBy === "VM"}
-                direction={order}
-                onClick={handleSort("VM")}
-              >
-                VM
-              </TableSortLabel>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
+    <div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            {/* <th onClick={() => sortData("_id")}>ID</th> */}
+            <th onClick={() => sortData("originationTime")}>Origination Time</th>
+            <th onClick={() => sortData("clusterId")}>Cluster ID</th>
+            <th onClick={() => sortData("userId")}>User ID</th>
+            <th onClick={() => sortData("devices.phone")}>Phone</th>
+            <th onClick={() => sortData("devices.voicemail")}>Voicemail</th>
+          </tr>
+        </thead>
+        <tbody>
           {sortedData.map((row) => (
-            <TableRow key={row._id}>
-              <TableCell>{row.originationTime}</TableCell>
-              <TableCell>{row.clusterId}</TableCell>
-              <TableCell>{row.userId}</TableCell>
-              <TableCell>{row.devices.phone}</TableCell>
-              <TableCell>{row.devices.voicemail}</TableCell>
-            </TableRow>
+            <tr key={row._id}>
+              {/* <td>{row._id}</td> */}
+              <td>{row.originationTime}</td>
+              <td>{row.clusterId}</td>
+              <td>{row.userId}</td>
+              <td>{row.devices.phone}</td>
+              <td>{row.devices.voicemail}</td>
+            </tr>
           ))}
-        </TableBody>
+        </tbody>
       </Table>
-    </TableContainer>
+    </div>
   );
 }
 
