@@ -1,12 +1,17 @@
 # Take home task
 
+├──  answers-for-tasks
+├──  my-backend
+├──  my-frontend
+└── README.md
+
 ## Data from MongoDB compass
 ![Picture Description](/imgs/MongoDB_compass.jpg)
 All the sample are created by inserting json file.
 
 ### Main command to start the server
 NoteL: Data should be ready on MongoDB Compass before running the command below
-`node index.js`
+After installing the project, run `node index.js` under my-backend
 
 
 --------------------------------------------
@@ -57,7 +62,7 @@ Retrieves data based on the cluster ID provided.
 --------------------------------------------------------------------
 ## Frontend(React)- won't be able to finish
 
-Run `npm start` under "my-frontend"
+Run `npm start` under "my-frontend", default port will be switched to available one.
 
 ### Output of sortable table and export button
 ## Click headers to sort the table
