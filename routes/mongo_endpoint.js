@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost/takeHomeTask', { useNewUrlParser: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch((error) => console.log(error));
+  .then(() => console.log('Connected to MongoDB..."'))
+  .catch((error) => console.log("could not connect to MongoDB..", error));
 
 // Define schema for data model
 const dataSchema = new mongoose.Schema({
@@ -36,7 +36,7 @@ function applyTimeRange(startDate, endDate) {
 router.get('/', (req, res) => {
   Data.find({})
     .then((data) => res.json(data))
-    .catch((error) => res.status(500).send(error.message));
+    .catch((error) => res.status(400).send(error.message));
 });
 
 router.get('/phone/:phone', (req, res) => {
@@ -53,7 +53,7 @@ router.get('/phone/:phone', (req, res) => {
   
   Data.find(query)
     .then((data) => res.json(data))
-    .catch((error) => res.status(500).send(error.message));
+    .catch((error) => res.status(400).send(error.message));
 });
 
 router.get('/voicemail/:voicemail', (req, res) => {
@@ -69,7 +69,7 @@ router.get('/voicemail/:voicemail', (req, res) => {
   
   Data.find(query)
     .then((data) => res.json(data))
-    .catch((error) => res.status(500).send(error.message));
+    .catch((error) => res.status(400).send(error.message));
 });
 
 router.get('/clusterId/:clusterId', (req, res) => {
@@ -84,7 +84,7 @@ router.get('/clusterId/:clusterId', (req, res) => {
 
   Data.find(query)
     .then((data) => res.json(data))
-    .catch((error) => res.status(500).send(error.message));
+    .catch((error) => res.status(400).send(error.message));
 });
 
 router.get('/userId/:userId', (req, res) => {
@@ -99,7 +99,7 @@ router.get('/userId/:userId', (req, res) => {
 
   Data.find(query)
     .then((data) => res.json(data))
-    .catch((error) => res.status(500).send(error.message));
+    .catch((error) => res.status(400).send(error.message));
 });
 
 
