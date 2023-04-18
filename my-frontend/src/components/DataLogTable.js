@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
+import { CSVLink } from "react-csv";
 
 function DataLogTable() {
   const [data, setData] = useState([]);
   const [sortOrder, setSortOrder] = useState({column: null, direction: null});
-
+  const [headers, setHeaders] = useState([
+    { label: "Origination Time", key: "originationTime" },
+    { label: "Cluster ID", key: "clusterId" },
+    { label: "User ID", key: "userId" },
+    { label: "Phone", key: "devices.phone" },
+    { label: "Voicemail", key: "devices.voicemail" },
+  ]);
   useEffect(() => {
     axios
       .get("http://localhost:3000/mongodb")
@@ -41,7 +48,10 @@ function DataLogTable() {
   }, [data, sortOrder]);
 
   return (
-    <div>
+    <div class="container">
+      
+     
+     
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -66,6 +76,11 @@ function DataLogTable() {
           ))}
         </tbody>
       </Table>
+       {/* <Button type="button" class="btn btn-outline-primary"> */}
+       <CSVLink class="btn btn-outline-primary btn-space" data={sortedData} headers={headers} filename={"dataLog.csv"}>
+          Export to CSV
+        </CSVLink>
+      {/* </Button> */}      
     </div>
   );
 }

@@ -80,7 +80,9 @@
 .table-bordered th {
   background-color: #f8f9fa;
 }
-
+.btn-space {
+  margin-top: 5px;
+}
 
 @keyframes App-logo-spin {
   from {
