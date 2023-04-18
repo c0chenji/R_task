@@ -1,9 +1,6 @@
 # Take home task
 
-├──  answers-for-tasks
-├──  my-backend
-├──  my-frontend
-└── README.md
+Major folders, answers-for-tasks, my-backend, my-frontend
 
 ## Data from MongoDB compass
 ![Picture Description](/imgs/MongoDB_compass.jpg)
