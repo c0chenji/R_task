@@ -56,6 +56,8 @@ Retrieves data based on the cluster ID provided.
 --------------------------------------------------------------------
 #### Frontend(React)- won't be able to finish
 
+Run `npm start` under "my-frontend"
+
 Output of sortable table
 ![Phone Output](/imgs/sortable_table.jpg)
 
