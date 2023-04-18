@@ -4,7 +4,8 @@
 ![Picture Description](/imgs/MongoDB_compass.jpg)
 All the sample are created by inserting json file.
 
-### Main command for starting program
+### Main command to start the server
+NoteL: Data should be ready on MongoDB Compass before running the command below
 `node index.js`
 
 
