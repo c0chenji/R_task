@@ -60,9 +60,10 @@ Retrieves data based on the cluster ID provided.
 Run `npm start` under "my-frontend"
 
 ### Output of sortable table and export button
+## Click headers to sort the table
 ![table Output](/imgs/sortable_table.jpg)
 
-Export to CSV will generate excel file with following format.
+## Export to CSV will generate excel file with following format.
 ![csv Output](/imgs/csv_output.jpg)
 
 ## License
